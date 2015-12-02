@@ -1,5 +1,5 @@
 # OGN Skylines Gateway
-This application forwards packets from the [OpenGliderNetwork](http://glidernet.org) to [Skylines](https://www.skylines-project.org).
+This application forwards packets from the [OpenGliderNetwork](http://glidernet.org) to [Skylines](https://skylines.aero).
 
 ## Installation and Setup
 0. Update git-submodule `ogn-python`
