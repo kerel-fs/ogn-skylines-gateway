@@ -1,4 +1,5 @@
 # OGN Skylines Gateway
+[![Build Status](https://travis-ci.org/kerel-fs/ogn-skylines-gateway.png?branch=master)](https://travis-ci.org/kerel-fs/ogn-skylines-gateway)
 This application forwards packets from the [OpenGliderNetwork](http://glidernet.org) to [Skylines](https://skylines.aero).
 
 ## Installation and Setup
