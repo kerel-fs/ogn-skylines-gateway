@@ -1,0 +1,13 @@
+# skylines
+crc16==0.1.1
+
+# ogn-python
+SQLAlchemy==1.0.8
+geopy==1.11.0
+manage.py==0.2.10
+
+# ogn-skylines-gateway prod
+manage.py==0.2.10
+
+# ogn-skylines-gateway dev
+flake8==2.5.0

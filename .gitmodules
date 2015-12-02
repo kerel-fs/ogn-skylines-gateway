@@ -1,0 +1,3 @@
+[submodule "ogn-python"]
+	path = ogn-python
+	url = https://github.com/glidernet/ogn-python.git

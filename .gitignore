@@ -1,0 +1,5 @@
+# python byte code
+*.pyc
+
+# database file
+*.db
