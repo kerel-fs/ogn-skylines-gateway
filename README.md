@@ -4,31 +4,35 @@ This application forwards packets from the [OpenGliderNetwork](http://glidernet.
 
 ## Installation and Setup
 0. Update git-submodule `ogn-python`
-```
-$ git submodule init
-$ git submodule update
-```
+
+   ```
+   git submodule init
+   git submodule update
+   ```
 
 1. Install python requirements
-```
-pip install -r requirements.txt
-```
+
+   ```
+   pip install -r requirements.txt
+   ```
 
 2. Create database
-```
-$ ./manage.py db.init
-```
+
+   ```
+   ./manage.py db.init
+   ```
 
 3. Insert some data into the database
-```
-$ ./manage.py db.insert "DD1234" "DEADBEEF"
-```
+
+   ```
+   ./manage.py db.insert "DD1234" "DEADBEEF"
+   ```
 
 ## Running the server
 Start the gateway with the follwing command.
 
 ```
-$ ./manage.py run --logfile 'ogn-skylines.log'
+./manage.py run --logfile 'ogn-skylines.log'
 ```
 
 ## manage.py - Usage
