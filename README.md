@@ -60,6 +60,6 @@ Licensed under the [AGPLv3](LICENSE) or any later version.
 Fabian P. Schmidt, <kerel-fs@gmx.de>
 
 ## Contact
-- via email
-- via IRC: `kerel` on [freenode](irc://chat.freenode.net)
-            related channels: `#skylines` and `#glidernet` on freenode
+- IRC: `kerel` on [freenode](https://freenode.net/),
+  related channels: `#skylines` and `#glidernet` on freenode
+- email
