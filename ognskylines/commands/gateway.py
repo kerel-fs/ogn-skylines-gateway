@@ -3,10 +3,10 @@ from ognskylines.gateway import ognSkylinesGateway
 from ognskylines.dbutils import session
 
 from manager import Manager
-gateway_manager = Manager()
+manager = Manager()
 
 
-@gateway_manager.command
+@manager.command
 def run(skylines_host='127.0.0.1', skylines_port=5597, logfile=''):
     """Run the ogn-->skylines gateway."""
 

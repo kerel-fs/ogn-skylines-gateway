@@ -4,17 +4,18 @@ from ognskylines.dbutils import engine, session
 from ognskylines.model import Base, User
 
 from manager import Manager
-database_manager = Manager()
+manager = Manager()
 
 
-@database_manager.command
+@manager.command
 def init():
     """Initialize the database."""
     Base.metadata.create_all(engine)
     print('Done.')
 
 
-@database_manager.command
+
+@manager.command
 def insert(ogn_address, skylines_key):
     """Insert a new user into the database."""
     ogn_address = str(ogn_address)
