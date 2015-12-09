@@ -49,6 +49,7 @@ available commands:
   run                      Run the ogn-->skylines gateway.
   
   [db]
+    import_ddb             Import registered devices from the DDB (flushed the device list).
     init                   Initialize the database.
     insert                 Insert a new user into the database.
 ```

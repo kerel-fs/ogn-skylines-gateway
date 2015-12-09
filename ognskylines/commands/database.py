@@ -1,7 +1,11 @@
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 
 from ognskylines.dbutils import engine, session
-from ognskylines.model import Base, User
+from ognskylines.model import Base, User, Device
+
+from ogn.utils import get_ddb, get_trackable
+
 
 from manager import Manager
 manager = Manager()
@@ -13,6 +17,19 @@ def init():
     Base.metadata.create_all(engine)
     print('Done.')
 
+
+@manager.command
+def import_ddb():
+    """Import registered devices from the DDB (flushed the device list)."""
+    session.query(Device).delete()
+
+    print("Import registered devices fom the DDB...")
+    devices = get_trackable(get_ddb())
+    for ogn_address in devices:
+        device = Device(ogn_address=ogn_address[3:])
+        session.add(device)
+    session.commit()
+    print("Imported {} devices.".format(len(devices)))
 
 
 @manager.command
@@ -31,6 +48,10 @@ def insert(ogn_address, skylines_key):
         int(ogn_address, 16)
     except ValueError:
         failure = 'Address and Key must be hexadecimal.'
+    try:
+        session.query(Device).filter(Device.ogn_address == ogn_address).one()
+    except (MultipleResultsFound, NoResultFound):
+        failure = 'Device not registered in the ddb.'
 
     if failure:
         print('Invalid input: {}'.format(failure))
