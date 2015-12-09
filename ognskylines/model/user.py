@@ -10,6 +10,6 @@ class User(Base):
     skylines_key = Column(BigInteger, nullable=False)
 
     def __repr__(self):
-        return "<User: %s,%s>" % (
+        return "<User: ogn_address={}, skylines_key={}>".format(
             self.ogn_address,
             self.skylines_key)
