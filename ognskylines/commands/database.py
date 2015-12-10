@@ -19,6 +19,16 @@ def init():
 
 
 @manager.command
+def drop(sure=0):
+    """Drop all tables."""
+    if sure:
+        Base.metadata.drop_all(engine)
+        print('Dropped all tables.')
+    else:
+        print("Add argument '--sure 1' to drop all tables.")
+
+
+@manager.command
 def import_ddb():
     """Import registered devices from the DDB (flushed the device list)."""
     session.query(Device).delete()
