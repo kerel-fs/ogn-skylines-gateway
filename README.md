@@ -55,11 +55,13 @@ optional arguments:
 
 available commands:
   run                      Run the ogn-->skylines gateway.
-  
+
   [db]
     drop                   Drop all tables.
-    import_ddb             Import registered devices from the DDB (flushed the device list).
     init                   Initialize the database.
+
+  [devices]
+    import_ddb             Import registered devices from the DDB (flushed the device list).
     insert                 Insert a new user into the database.
     show_all               Show all devices with known location.
     show_nearby            Show nearby devices.
