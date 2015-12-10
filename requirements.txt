@@ -3,7 +3,14 @@ crc16==0.1.1
 
 # ogn-python
 SQLAlchemy==1.0.8
+GeoAlchemy2==0.2.6
+psycopg2==2.6.1
+shapely==1.5.13
 geopy==1.11.0
+redis==2.10.5
+celery[redis]>=3.1,<3.2
+alembic==0.8.3
+
 
 # ogn-skylines-gateway prod
 manage.py==0.2.10
