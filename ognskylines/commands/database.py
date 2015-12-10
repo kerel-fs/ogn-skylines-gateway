@@ -44,7 +44,7 @@ def insert(ogn_address, skylines_key):
             len(skylines_key) == 8):
         failure = 'Wrong input length.'
     try:
-        int(skylines_key, 16)
+        _skylines_key = int(skylines_key, 16)
         int(ogn_address, 16)
     except ValueError:
         failure = 'Address and Key must be hexadecimal.'
@@ -56,10 +56,10 @@ def insert(ogn_address, skylines_key):
     if failure:
         print('Invalid input: {}'.format(failure))
     else:
-        user = User(ogn_address=ogn_address, skylines_key=skylines_key)
+        user = User(ogn_address=ogn_address, skylines_key=_skylines_key)
         try:
             session.add(user)
             session.commit()
-            print('Added user (ogn_address {}, skylines_key {}'.format(user.ogn_address, user.skylines_key))
+            print('Added {}.'.format(user))
         except IntegrityError:
             print('User already in the database.')

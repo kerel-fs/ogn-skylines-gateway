@@ -24,8 +24,8 @@ class ognSkylinesGateway:
             return
         skylines_key = user.skylines_key
 
-        logger.info("TRACKED {} with key: {}".format(beacon.address, skylines_key))
-        message = create_fix_message(int(skylines_key, 16),
+        logger.info("TRACKED {} with key: {}".format(beacon.address, user.skylines_key_hex))
+        message = create_fix_message(skylines_key,
                                      # NOTE: equivalent is (now - now.replace(hour=0, minute=0, second=0, microsecond=0)).seconds * 1000
                                      (((beacon.timestamp.hour * 60) + beacon.timestamp.minute) * 60 + beacon.timestamp.second) * 1000,
                                      beacon.latitude,
