@@ -1,5 +1,6 @@
 import socket
 import logging
+
 from sqlalchemy.orm.exc import MultipleResultsFound, NoResultFound
 
 from ogn.gateway.client import ognGateway
@@ -7,17 +8,13 @@ from ogn.model import AircraftBeacon
 
 from skylines.utils import create_fix_message, fix_message_str
 
-from ognskylines.model import User
+from ognskylines.model import User, Device
 
 logger = logging.getLogger(__name__)
 
 
 class ognSkylinesGateway:
-    def process_beacon(self, beacon):
-        if type(beacon) is not AircraftBeacon:
-            return
-        logger.debug(fix_message_str(beacon))
-
+    def forward_beacon(self, beacon):
         try:
             user = self.session.query(User).filter(User.ogn_address == beacon.address).one()
         except (MultipleResultsFound, NoResultFound):
@@ -37,6 +34,25 @@ class ognSkylinesGateway:
                                      beacon.climb_rate,
                                      0)
         self.socket.sendto(message, self.address)
+
+    def update_devices_list(self, beacon):
+        try:
+            device = self.session.query(Device).filter(Device.ogn_address == beacon.address).one()
+        except (MultipleResultsFound, NoResultFound):
+            return
+
+        device.timestamp = beacon.timestamp
+        device.set_location(longitude=beacon.longitude, latitude=beacon.latitude)
+
+        self.session.commit()
+        logger.debug(" {} SEEN AT {}".format(device.ogn_address, device.timestamp))
+
+    def process_beacon(self, beacon):
+        if type(beacon) is not AircraftBeacon:
+            return
+        logger.debug(fix_message_str(beacon))
+        self.forward_beacon(beacon)
+        self.update_devices_list(beacon)
 
     def __init__(self, session, aprs_user, host, port):
         self.session = session
