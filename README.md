@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/kerel-fs/ogn-skylines-gateway.png?branch=master)](https://travis-ci.org/kerel-fs/ogn-skylines-gateway)
 This application forwards packets from the [OpenGliderNetwork](http://glidernet.org) to [Skylines](https://skylines.aero).
 
-## Installation and Setup
+## Installation and Setup (dev)
 0. Update git-submodule `ogn-python`
 
    ```
@@ -10,19 +10,27 @@ This application forwards packets from the [OpenGliderNetwork](http://glidernet.
    git submodule update
    ```
 
-1. Install python requirements
+1. Create virtual maschine with vagrant
+   ```
+   vagrant up
+   ```
+
+3. Log in to the virtual maschine
 
    ```
-   pip install -r requirements.txt
+   vagrant ssh
    ```
 
-2. Create database
+4. Initialize the database and import registered devices from the [DDB](https://ddb.glidernet.org)
 
    ```
+   cd /vagrant
    ./manage.py db.init
+   ./manage.py db.import_ddb
+
    ```
 
-3. Insert some data into the database
+5. Insert some data into the database
 
    ```
    ./manage.py db.insert "DD1234" "DEADBEEF"

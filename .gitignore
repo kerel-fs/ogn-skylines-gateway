@@ -1,5 +1,11 @@
 # python byte code
 *.pyc
 
+# python virtualenv
+env
+
 # database file
 *.db
+
+# Vagrant
+.vagrant
