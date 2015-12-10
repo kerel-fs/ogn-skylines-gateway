@@ -43,7 +43,7 @@ def import_ddb():
 
 
 @manager.command
-def insert(ogn_address, skylines_key):
+def insert(ogn_address, skylines_key, add_device='n'):
     """Insert a new user into the database."""
     ogn_address = str(ogn_address)
     skylines_key = str(skylines_key)
@@ -61,7 +61,11 @@ def insert(ogn_address, skylines_key):
     try:
         session.query(Device).filter(Device.ogn_address == ogn_address).one()
     except (MultipleResultsFound, NoResultFound):
-        failure = 'Device not registered in the ddb.'
+        if not add_device == 'y':
+            failure = 'Device not registered in the ddb.'
+        else:
+            device = Device(ogn_address=ogn_address)
+            session.add(device)
 
     if failure:
         print('Invalid input: {}'.format(failure))
