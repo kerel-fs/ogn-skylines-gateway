@@ -17,7 +17,7 @@ class Location:
         return 'SRID=4326;POINT({0} {1})'.format(self.longitude, self.latitude)
 
     def __str__(self):
-        return '{0:9.4f} N {1:9.4f} O'.format(self.longitude, self.latitude)
+        return '{0:7.4f}, {1:8.4f}'.format(self.latitude, self.longitude)
 
 
 class Device(Base):
