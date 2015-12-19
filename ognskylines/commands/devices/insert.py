@@ -49,7 +49,7 @@ def insert(ogn_address, skylines_key, add_device='n'):
 
 @manager.command
 def import_ddb():
-    """Import registered devices from the DDB (flushed the device list)."""
+    """Import registered devices from the DDB (discards all devices before import)."""
     session.query(Device).delete()
 
     print("Import registered devices fom the DDB...")
