@@ -29,8 +29,9 @@ def show_all():
 @manager.arg('lat', help='Latitude of your location')
 @manager.arg('lon', help='Longitude of your location')
 @manager.arg('r', help='Search radius in km')
+@manager.arg('n', help='Limit output to N entries')
 @manager.command
-def show_nearby(lat=49.73, lon=7.33, r=8):
+def show_nearby(lat=49.73, lon=7.33, r=8, n=10):
     """Show nearby devices."""
     if not (lon and lat and r):
         print("Missing arguments lon/lat.")
@@ -40,7 +41,7 @@ def show_nearby(lat=49.73, lon=7.33, r=8):
     user_location = Location(lon=lon, lat=lat).to_wkt()
     distance = ST_Distance_Sphere(Device.location_wkb, user_location)
     direction = func.degrees(func.ST_Azimuth(user_location, Device.location_wkb))
-    devices = session.query(Device, direction.label('direction'), distance.label('distance')).filter(distance < r).all()
+    devices = session.query(Device, direction.label('direction'), distance.label('distance')).filter(distance < r).order_by(distance.asc()).limit(n).all()
 
     print('\nYour location: {}'.format(Location(lat=lat, lon=lon)))
     print('Search radius: {}\n'.format(format_distance(r)))
