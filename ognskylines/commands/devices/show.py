@@ -50,8 +50,8 @@ def show_nearby(lat=49.73, lon=7.33, r=8, n=10):
         print('(No devices nearby) \n\nYou may want to increase the search radius r.')
         return
 
-    print('{:^11} | {:^17} | {}'.format('ogn address', 'Location', 'distance / bearing'))
-    print('{:-<11} | {:-<17} | {:-<18}'.format('', '', ''))
+    print('{:^11} | {:^18} | {}'.format('ogn address', 'Location', 'distance / bearing'))
+    print('{:-<11} | {:-<18} | {:-<18}'.format('', '', ''))
     for device in devices:
 
         print("{:>11} | {} | {:>10}   {:>2}".format(
