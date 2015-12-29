@@ -6,8 +6,8 @@ def format_fuzzy_direction(angle):
 
 
 def format_distance(distance):
-    if distance > 1000:
-       text = '{:,.0f}km'.format(distance/1000)
+    if distance > 1:
+       text = '{:,.0f}km'.format(distance)
     else:
-       text = '{:,.0f}m'.format(distance)
+       text = '{:,.0f}m'.format(distance*1000)
     return text

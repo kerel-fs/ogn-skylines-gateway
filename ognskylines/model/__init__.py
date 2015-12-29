@@ -2,4 +2,4 @@
 
 from .base import Base
 from .user import User
-from .device import Device
+from .device import Device, Location
