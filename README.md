@@ -64,6 +64,59 @@ available commands:
     show_all               Show all users.
 ```
 
+## API
+
+### List nearby devices
+```
+GET /devices?lat=1.1&lon=2.2&r=100
+```
+
+Response:
+
+```
+[
+    {
+        "device": {
+            "location": {
+                "latitude": "float, decimal degrees",
+                "longitude": "float, decimal degrees"
+            },
+            "ogn_address": "hexadecimal string, 3 bytes",
+            "timestamp": "2016-01-01 00:00:01"
+        },
+        "direction": "float, angle in degrees",
+        "distance": "float, distance in km"
+    },
+    ...
+]
+```
+
+### Insert a new user
+```
+POST /user?skylines_key={skylines_key}&ogn_address={ogn_address}
+```
+
+### Show a user
+```
+GET /user?skylines_key={skylines_key}
+```
+
+Response:
+```
+[
+    {
+        "ogn_address": "hexadecimal string, 3 bytes",
+        "skylines_key": "hexadecimal string, 4 bytes"
+    },
+    ...
+]
+```
+
+### Delete a user
+```
+DELETE /user?skylines_key={skylines_key}
+```
+
 ## License
 Licensed under the [AGPLv3](LICENSE) or any later version.
 
