@@ -26,6 +26,33 @@ def validate_skylines_key(skylines_key):
         raise ValueError('no valid skylines_key given (hexadecimal string)')
 
 
+def insert_user(skylines_key, ogn_address, add_device=False):
+    """
+    raises:
+    - ValueError
+    - NoResultFound
+    - IntegrityError"""
+    validate_ogn_address(ogn_address)
+    validate_skylines_key(skylines_key)
+
+    try:
+        session.query(Device).filter(Device.ogn_address == ogn_address).one()
+    except NoResultFound as e:
+        if not add_device:
+            raise e
+        else:
+            device = Device(ogn_address=ogn_address)
+            session.add(device)
+
+    user = User(ogn_address=ogn_address, skylines_key=int(skylines_key, 16))
+    try:
+        session.add(user)
+        session.commit()
+        print('Added {}.'.format(user))
+    except IntegrityError as e:
+        raise e
+
+
 def get_nearby_devices(lat, lon, r, n):
     """Return nearby devices.
 
