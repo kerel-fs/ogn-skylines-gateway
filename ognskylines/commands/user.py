@@ -5,7 +5,7 @@ manager = Manager()
 
 
 @manager.command
-def insert(ogn_address, skylines_key, add_device='n'):
+def insert(skylines_key, ogn_address, add_device='n'):
     """Insert a new user."""
 
     skylines_key = str(skylines_key)

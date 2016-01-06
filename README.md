@@ -25,7 +25,7 @@ This application forwards packets from the [OpenGliderNetwork](http://glidernet.
 5. Insert some data into the database
 
    ```
-   ./manage.py users.insert "DD1234" "DEADBEEF"
+   ./manage.py users.insert "DEADBEEF" "DD1234"
    ```
 
 ## Running the server
