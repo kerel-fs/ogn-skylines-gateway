@@ -14,9 +14,11 @@ class User(Base):
         if self.skylines_key is None:
             return None
 
-        return '%X' % self.skylines_key
+        return '{:X}'.format(self.skylines_key)
 
     def __repr__(self):
-        return "<User: ogn_address={}, skylines_key={}>".format(
-            self.ogn_address,
-            self.skylines_key)
+        return str(self.as_dict())
+
+    def as_dict(self):
+        return {'ogn_address': self.ogn_address,
+                'skylines_key': self.skylines_key_hex}

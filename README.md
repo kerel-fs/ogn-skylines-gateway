@@ -19,13 +19,13 @@ This application forwards packets from the [OpenGliderNetwork](http://glidernet.
    ```
    cd /vagrant
    ./manage.py db.init
-   ./manage.py db.import_ddb
+   ./manage.py devices.import_ddb
    ```
 
 5. Insert some data into the database
 
    ```
-   ./manage.py db.insert "DD1234" "DEADBEEF"
+   ./manage.py users.insert "DD1234" "DEADBEEF"
    ```
 
 ## Running the server
@@ -54,9 +54,14 @@ available commands:
 
   [devices]
     import_ddb             Import registered devices from the DDB (discards all devices before import).
-    insert                 Insert a new user into the database.
     show_all               Show all devices with known location.
     show_nearby            Show nearby devices.
+
+  [users]
+    delete                 Delete a user.
+    insert                 Insert a new user.
+    show                   Show a user.
+    show_all               Show all users.
 ```
 
 ## License
