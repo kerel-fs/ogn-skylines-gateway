@@ -69,6 +69,6 @@ def show_all():
         print('{:^12} | {:^11}'.format('skylines key', 'ogn address'))
         print('{:-<12} | {:-<11}'.format('', ''))
         for user in users:
-            print("{:<12X} | {}".format(
-                user.skylines_key,
-                user.ogn_address))
+            print("{:<12} | {}".format(
+                user['skylines_key'],
+                user['ogn_address']))

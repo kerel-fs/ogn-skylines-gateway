@@ -55,7 +55,7 @@ def insert_user(skylines_key, ogn_address, add_device=False):
         session.commit()
     except IntegrityError as e:
         raise e
-    return user
+    return user.as_dict()
 
 
 def delete_user(skylines_key):
@@ -69,14 +69,14 @@ def delete_user(skylines_key):
 
     validate_skylines_key(skylines_key)
 
-    try:
-        query = session.query(User).filter(User.skylines_key == int(skylines_key, 16))
-        users = query.all()
-        query.delete()
-        session.commit()
-    except NoResultFound as e:
-        raise e
-    return users
+    query = session.query(User).filter(User.skylines_key == int(skylines_key, 16))
+    users = query.all()
+    if not len(users):
+        raise NoResultFound
+    query.delete()
+    session.commit()
+
+    return list(map(lambda user: user.as_dict(), users))
 
 
 def show_user(skylines_key):
@@ -90,11 +90,11 @@ def show_user(skylines_key):
 
     validate_skylines_key(skylines_key)
 
-    try:
-        users = session.query(User).filter(User.skylines_key == int(skylines_key, 16)).all()
-    except NoResultFound as e:
-        raise e
-    return users
+    users = session.query(User).filter(User.skylines_key == int(skylines_key, 16)).all()
+    if not len(users):
+        raise NoResultFound
+
+    return list(map(lambda user: user.as_dict(), users))
 
 
 def show_users():
@@ -103,14 +103,27 @@ def show_users():
     NoResultFound
     """
 
-    try:
-        users = session.query(User).all()
-    except NoResultFound as e:
-        raise e
-    return users
+    users = session.query(User).all()
+    if not len(users):
+        raise NoResultFound
+
+    return list(map(lambda user: user.as_dict(), users))
 
 
-def get_nearby_devices(lat, lon, r, n):
+def show_seen_devices():
+    """
+    raises:
+    NoResultFound
+    """
+
+    devices = session.query(Device).filter(Device.timestamp != None).all()  # noqa
+    if not len(devices):
+        raise NoResultFound
+
+    return list(map(lambda device: device.as_dict(), devices))
+
+
+def show_nearby_devices(lat, lon, r, n):
     """
     Return nearby devices.
 
@@ -127,4 +140,9 @@ def get_nearby_devices(lat, lon, r, n):
     devices = session.query(Device,
                             direction.label('direction'),
                             distance.label('distance')).filter(distance < r).order_by(distance.asc()).limit(n).all()
-    return devices
+    if not len(devices):
+        raise NoResultFound
+
+    return list(map(lambda device: {'device': device.Device.as_dict(),
+                                    'direction': round(device.direction, 2),
+                                    'distance': round(device.distance, 3)}, devices))

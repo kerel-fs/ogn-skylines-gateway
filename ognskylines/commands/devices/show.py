@@ -1,6 +1,4 @@
-from ognskylines.dbutils import session
-from ognskylines.model import Device, Location
-from ognskylines.model.functions import get_nearby_devices
+from ognskylines.model.functions import show_seen_devices, show_nearby_devices, NoResultFound
 
 from formatter import format_fuzzy_direction, format_distance
 
@@ -11,18 +9,18 @@ manager = Manager()
 @manager.command
 def show_all():
     """Show all devices with known location."""
-    devices = session.query(Device).filter(Device.timestamp != None).all()  # noqa
-
-    if len(devices) == 0:
+    try:
+        devices = show_seen_devices()
+    except NoResultFound:
         print('No devices with location in the databse.')
-        return
-
-    print('{:^11} | {:^23}'.format('ogn address', 'Location'))
-    print('{:-<11} | {:-<23}'.format('', ''))
-    for device in devices:
-        print("{:>11} | {}".format(
-            device.ogn_address,
-            device.location))
+    else:
+        print('{:^11} | {:^23}'.format('ogn address', 'Location'))
+        print('{:-<11} | {:-<23}'.format('', ''))
+        for device in devices:
+            print("{:>11} | {: 7.4f}, {:8.4f}".format(
+                device['ogn_address'],
+                device['location']['lat'],
+                device['location']['lon']))
 
 
 @manager.arg('lat', help='Latitude of your location')
@@ -35,20 +33,21 @@ def show_nearby(lat=49.73, lon=7.33, r=8, n=10):
     if not (lon and lat and r):
         print("Missing arguments lon/lat.")
 
-    print('Your location: {}'.format(Location(lat=lat, lon=lon)))
+    print('Your location: {: 7.4f}, {:8.4f}'.format(lat, lon))
     print('Search radius: {}\n'.format(format_distance(r)))
 
-    devices = get_nearby_devices(lat, lon, r, n)
-    if len(devices) == 0:
+    try:
+        devices = show_nearby_devices(lat, lon, r, n)
+    except NoResultFound:
         print('(No devices nearby) \n\nYou may want to increase the search radius r.')
-        return
+    else:
+        print('{:^11} | {:^18} | {}'.format('ogn address', 'Location', 'distance / bearing'))
+        print('{:-<11} | {:-<18} | {:-<18}'.format('', '', ''))
+        for device in devices:
 
-    print('{:^11} | {:^18} | {}'.format('ogn address', 'Location', 'distance / bearing'))
-    print('{:-<11} | {:-<18} | {:-<18}'.format('', '', ''))
-    for device in devices:
-
-        print("{:>11} | {} | {:>10}   {:>2}".format(
-            device.Device.ogn_address,
-            device.Device.location,
-            format_distance(device.distance),
-            format_fuzzy_direction(device.direction)))
+            print("{:>11} | {: 7.4f}, {:8.4f} | {:>10}   {:>2}".format(
+                device['device']['ogn_address'],
+                device['device']['location']['lat'],
+                device['device']['location']['lon'],
+                format_distance(device['distance']),
+                format_fuzzy_direction(device['direction'])))

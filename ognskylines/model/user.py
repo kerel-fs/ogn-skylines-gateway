@@ -20,5 +20,5 @@ class User(Base):
         return str(self.as_dict())
 
     def as_dict(self):
-        return {'ogn_address': self.ogn_address,
+        return {'ogn_address': '{}'.format(self.ogn_address),
                 'skylines_key': self.skylines_key_hex}
