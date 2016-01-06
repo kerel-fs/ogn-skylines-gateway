@@ -15,9 +15,10 @@ sudo apt-get install -y --no-install-recommends python3 python3-pip
 cd /vagrant
 sudo apt-get install -y --no-install-recommends python3-dev libgeos-dev
 sudo -H pip3 install -r requirements.txt
+sudo -H pip3 install --find-link=. ogn-python
 
 # # initialize database
 # ./manage.py db.init
 
 # # import registered devices from ddb
-# ./manage.py db.import_ddb
+# ./manage.py devices.import_ddb

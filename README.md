@@ -3,13 +3,6 @@
 This application forwards packets from the [OpenGliderNetwork](http://glidernet.org) to [Skylines](https://skylines.aero).
 
 ## Installation and Setup (dev)
-0. Update git-submodule `ogn-python`
-
-   ```
-   git submodule init
-   git submodule update
-   ```
-
 1. Create virtual maschine with vagrant
    ```
    vagrant up
