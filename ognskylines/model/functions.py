@@ -16,11 +16,13 @@ def validate_ogn_address(ogn_address):
         raise ValueError('no valid skylines_key given (hexadecimal string)')
 
 
-def validate_skylines_key(skylines_key):
+def validate_skylines_key(skylines_key_hex):
     try:
-        int(skylines_key, 16)
+        skylines_key = int(skylines_key_hex, 16)
     except ValueError:
         raise ValueError('no valid skylines_key given (hexadecimal string)')
+    if not (0 <= skylines_key <= int('FFFFFFFF', 16)):
+        raise ValueError('no valid skylines_key given')
 
 
 def insert_user(skylines_key, ogn_address, add_device=False):
