@@ -17,8 +17,6 @@ def validate_ogn_address(ogn_address):
 
 
 def validate_skylines_key(skylines_key):
-    if not len(skylines_key) == 8:
-        raise ValueError('no valid skylines_key given')
     try:
         int(skylines_key, 16)
     except ValueError:
