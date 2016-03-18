@@ -1,7 +1,7 @@
 # skylines
 crc16==0.1.1
 
-ogn-python==0.2.1
+ogn-client==0.3.0
 SQLAlchemy==1.0.8
 GeoAlchemy2==0.2.6
 psycopg2==2.6.1

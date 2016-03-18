@@ -125,12 +125,12 @@ def create_fix_message(
 
 def fix_message_str(beacon):
     return """ {0} {1} ({3: 6.2f},{4: 7.2f}), track {5:3d}, gspeed {6:3d}, alt {7:4d}, vario {8: 4.1f}, millisec {2}""".format(
-        beacon.name,
-        beacon.timestamp.strftime('%H:%M:%S'),
-        ((((beacon.timestamp.hour + 1) * 60) + beacon.timestamp.minute) * 60 + beacon.timestamp.second) * 1000,
-        beacon.latitude,
-        beacon.longitude,
-        beacon.track,
-        int(beacon.ground_speed / 3.6),
-        int(beacon.altitude),
-        beacon.climb_rate)
+        beacon['name'],
+        beacon['timestamp'].strftime('%H:%M:%S'),
+        ((((beacon['timestamp'].hour + 1) * 60) + beacon['timestamp'].minute) * 60 + beacon['timestamp'].second) * 1000,
+        beacon['latitude'],
+        beacon['longitude'],
+        beacon['track'],
+        int(beacon['ground_speed'] / 3.6),
+        int(beacon['altitude']),
+        beacon['climb_rate'])
