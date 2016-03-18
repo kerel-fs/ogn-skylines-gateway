@@ -1,10 +1,20 @@
 from ognskylines.dbutils import session
 from ognskylines.model import Device
-from ogn.utils import get_ddb, get_trackable
-
+import requests
 
 from manager import Manager
 manager = Manager()
+
+
+DDB_URL = "http://ddb.glidernet.org/download/?j=1"
+
+
+def get_ddb():
+    devices = requests.get(DDB_URL).json()
+    for device in devices['devices']:
+        device.update({'identified': device['identified'] == 'Y',
+                       'tracked': device['tracked'] == 'Y'})
+        yield device
 
 
 @manager.command
@@ -13,9 +23,9 @@ def import_ddb():
     session.query(Device).delete()
 
     print("Import registered devices fom the DDB...")
-    devices = get_trackable(get_ddb())
-    for ogn_address in devices:
-        device = Device(ogn_address=ogn_address[3:])
-        session.add(device)
+    for device in get_ddb():
+        if device['identified'] and device['tracked']:
+            session.add(Device(ogn_address=device['device_id']))
+
     session.commit()
-    print("Imported {} devices.".format(len(devices)))
+    print("Imported {} devices.".format(session.query(Device).count()))
